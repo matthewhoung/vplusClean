@@ -3,21 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{33DCD947-F53E-400F-AECB-C98A8E8C169E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{33DCD947-F53E-400F-AECB-C98A8E8C169E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{DF9487B7-D7AE-47BE-B882-21A23CA798A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{DF9487B7-D7AE-47BE-B882-21A23CA798A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{9BC8DA37-FFDA-440C-9730-475CFE0947EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{9BC8DA37-FFDA-440C-9730-475CFE0947EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{55648A54-5987-4A5C-8DC6-8FACB1E24C18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{55648A54-5987-4A5C-8DC6-8FACB1E24C18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "logs", "logs", "{7D7E00C3-1AF7-436A-AF30-F236044D6A8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{33DCD947-F53E-400F-AECB-C98A8E8C169E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -36,5 +35,11 @@ Global
 		{55648A54-5987-4A5C-8DC6-8FACB1E24C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55648A54-5987-4A5C-8DC6-8FACB1E24C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55648A54-5987-4A5C-8DC6-8FACB1E24C18}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {865478DB-27A5-4D48-ABF7-A30B10BC4EC5}
 	EndGlobalSection
 EndGlobal
