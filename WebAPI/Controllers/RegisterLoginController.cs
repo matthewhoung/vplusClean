@@ -71,7 +71,7 @@ namespace WebAPI.Controllers
             }
 
             var token = _jwtService.GenerateToken(user);
-            _logger.LogInformation("User with email {PhoneNumber} logged in successfully", loginEmailModel.PhoneNumber);
+            _logger.LogInformation("User with Phone Number {PhoneNumber} logged in successfully", loginEmailModel.PhoneNumber);
 
             return Ok(token);
         }
