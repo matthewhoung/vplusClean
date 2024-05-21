@@ -1,7 +1,5 @@
 using Infrastructure.Configurations;
 using Newtonsoft.Json;
-using Microsoft.AspNetCore.Mvc;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 

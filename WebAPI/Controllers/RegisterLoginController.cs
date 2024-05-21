@@ -8,14 +8,14 @@ namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    public class UsersController : ControllerBase
+    public class RegisterLoginController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IJwtService _jwtService;
-        private readonly ILogger<UsersController> _logger;
+        private readonly ILogger<RegisterLoginController> _logger;
 
-        public UsersController(IUserRepository userRepository, IPasswordHasher passwordHasher, IJwtService jwtService, ILogger<UsersController> logger)
+        public RegisterLoginController(IUserRepository userRepository, IPasswordHasher passwordHasher, IJwtService jwtService, ILogger<RegisterLoginController> logger)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
@@ -55,6 +55,23 @@ namespace WebAPI.Controllers
 
             var token = _jwtService.GenerateToken(user);
             _logger.LogInformation("User with email {Email} logged in successfully", loginEmailModel.Email);
+
+            return Ok(token);
+        }
+        [HttpPost("login/phone")]
+        public IActionResult LoginWithPhone([FromBody] LoginPhoneModel loginEmailModel)
+        {
+            _logger.LogInformation("Logging attempt with Phone Number {PhoneNumber}", loginEmailModel.PhoneNumber);
+
+            var user = _userRepository.GetUserByPhone(loginEmailModel.PhoneNumber);
+            if (user == null || !_passwordHasher.VerifyPassword(loginEmailModel.Password, user.PasswordHash))
+            {
+                _logger.LogInformation("Unathorized access attempt with Phone Number: {PhoneNumber}", loginEmailModel.PhoneNumber);
+                return Unauthorized();
+            }
+
+            var token = _jwtService.GenerateToken(user);
+            _logger.LogInformation("User with email {PhoneNumber} logged in successfully", loginEmailModel.PhoneNumber);
 
             return Ok(token);
         }
