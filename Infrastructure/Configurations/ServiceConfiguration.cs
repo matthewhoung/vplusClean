@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Application.Interfaces;
+using Infrastructure.Repositories;
+using Infrastructure.Security;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySql.Data.MySqlClient;
 using System.Data;
@@ -14,15 +17,15 @@ namespace Infrastructure.Configurations
             services.AddScoped<IDbConnection>(provider =>
                 new MySqlConnection(configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddScoped<ITodoTaskRepository, TodoTaskRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }
 
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
-            //services.AddScoped<IJwtService, JwtService>();
-            //services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
             return services;
         }
     }

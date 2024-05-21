@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿// Infrastructure/Configurations/SecurityConfiguration.cs
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Application.Interfaces;
-using Infrastructure.Security;
 
 namespace Infrastructure.Configurations
 {
