@@ -1,12 +1,11 @@
 ﻿using Application.Interfaces;
 using Infrastructure.Repositories;
 using Infrastructure.Security;
+using Infrastructure.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySql.Data.MySqlClient;
 using System.Data;
-
-
 
 namespace Infrastructure.Configurations
 {
@@ -18,6 +17,7 @@ namespace Infrastructure.Configurations
                 new MySqlConnection(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
 
             return services;
         }

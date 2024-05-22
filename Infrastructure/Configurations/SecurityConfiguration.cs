@@ -1,4 +1,5 @@
 ﻿// Infrastructure/Configurations/SecurityConfiguration.cs
+using Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
