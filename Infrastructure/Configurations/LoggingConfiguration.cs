@@ -11,15 +11,13 @@ namespace Infrastructure.Configurations
         {
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
-                .WriteTo.Console()
-                .WriteTo.Seq(configuration["Serilog:WriteTo:1:Args:serverUrl"])
                 .CreateLogger();
 
             services.AddSingleton(Log.Logger);
             services.AddLogging(loggingBuilder =>
             {
-                loggingBuilder.ClearProviders();  
-                loggingBuilder.AddSerilog();  
+                loggingBuilder.ClearProviders();  // Clear default providers
+                loggingBuilder.AddSerilog();  // Add Serilog provider
             });
 
             return services;

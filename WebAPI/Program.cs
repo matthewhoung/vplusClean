@@ -12,11 +12,13 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 });
+
 //Add custom services
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddCustomLogging(builder.Configuration);
 builder.Services.AddRepositories(builder.Configuration);
 builder.Services.AddDomainServices();
+
 //clear the default logging providers and use Serilog
 builder.Logging.ClearProviders();
 builder.Host.UseSerilog();
