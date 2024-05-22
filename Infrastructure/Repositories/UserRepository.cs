@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Users;
 using Core.Entities;
 using Dapper;
 using System.Data;

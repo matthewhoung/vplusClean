@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Tasks;
 using Core.Tasks;
 using Dapper;
 using System.Data;
@@ -14,7 +14,7 @@ namespace Infrastructure.Tasks
             _dbConnection = dbConnection;
         }
         
-        public async Task<TaskBody> GetAllByIdAsync(int id)
+        public async Task<TaskBody> GetTaskByIdAsync(int id)
         {
             // TODO: modify the table and column names to match the actual database schema
             var query = "SELECT * FROM Tasks WHERE Id = @Id";
@@ -27,7 +27,7 @@ namespace Infrastructure.Tasks
             }
             return taskId;
         }
-        public async Task AddTaskAsync(TaskBody task)
+        public async Task AddAsync(TaskBody task)
         {
             // TODO: modify the table and column names to match the actual database schema
             _dbConnection.Open();
@@ -98,6 +98,7 @@ namespace Infrastructure.Tasks
         }
         public async Task AddWorkDayAsync(WorkDay workDay)
         {
+            // TODO: modify the table and column names to match the actual database schema
             _dbConnection.Open();
             using var transaction = _dbConnection.BeginTransaction();
             try
@@ -120,21 +121,60 @@ namespace Infrastructure.Tasks
         }
         public async Task<IEnumerable<TaskSubBody>> GetSubTaskAsync(int taskId)
         {
+            // TODO: modify the table and column names to match the actual database schema
             var querry = "SELECT * FROM SubTasks WHERE TaskId = @TaskId";
             var subTasks = await _dbConnection.QueryAsync<TaskSubBody>(querry, new { TaskId = taskId });
             return subTasks;
         }
         public async Task<IEnumerable<Collaborator>> GetCollaboratorAsync(int taskId)
         {
+            // TODO: modify the table and column names to match the actual database schema
             var querry = "SELECT * FROM Collaborators WHERE TaskId = @TaskId";
             var collaborators = await _dbConnection.QueryAsync<Collaborator>(querry, new { TaskId = taskId });
             return collaborators;
         }
         public async Task<IEnumerable<WorkDay>> GetWorkDayAsync(int taskId)
         {
+            // TODO: modify the table and column names to match the actual database schema
             var querry = "SELECT * FROM WorkDays WHERE TaskId = @TaskId";
             var workDays = await _dbConnection.QueryAsync<WorkDay>(querry, new { TaskId = taskId });
             return workDays;
+        }
+
+        public async Task UpdateAsync(TaskBody entity)
+        {
+            _dbConnection.Open();
+            using var transaction = _dbConnection.BeginTransaction();
+            try
+            {
+                var comman = @"
+                    UPDATE Tasks
+                    SET UserId = @UserId, 
+                        Title = @Title, 
+                        Description = @Description, 
+                        Priority = @Priority, 
+                        Progress = @Progress, 
+                        StartDate = @StartDate, 
+                        EndDate = @EndDate
+                    WHERE Id = @Id";
+                await _dbConnection.ExecuteAsync(comman, entity);
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                throw;
+            }
+            finally
+            {
+                _dbConnection.Close();
+            }
+        }
+
+        public Task DeleteAsync(int id,int taskId)
+        {
+            var command = "DELETE taskId = @TaskId FROM Tasks WHERE Id = @Id";
+            return _dbConnection.ExecuteAsync(command, new { Id = id , TaskId = taskId});
         }
     }
 }

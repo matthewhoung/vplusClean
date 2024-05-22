@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Security;
 using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Security

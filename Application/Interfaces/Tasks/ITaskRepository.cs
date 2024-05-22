@@ -1,10 +1,10 @@
 ﻿using Core.Tasks;
 
-namespace Application.Interfaces
+namespace Application.Interfaces.Tasks
 {
-    public interface ITaskRepository
+    public interface ITaskRepository : ITaskGeneric<TaskBody>
     {
-        Task AddTaskAsync(TaskBody task);
+        //ToDo: add progress, priority, start date, end date
         Task AddSubTaskAsync(TaskSubBody subTask);
         Task AddCollaboratorAsync(Collaborator collaborator);
         Task AddWorkDayAsync(WorkDay workDay);

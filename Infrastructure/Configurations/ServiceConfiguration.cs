@@ -1,4 +1,7 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Security;
+using Application.Interfaces.Tasks;
+using Application.Interfaces.Users;
+using Application.Services.Tasks;
 using Infrastructure.Repositories;
 using Infrastructure.Security;
 using Infrastructure.Tasks;
@@ -26,6 +29,8 @@ namespace Infrastructure.Configurations
         {
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<ITaskService,TaskService>();
+
             return services;
         }
     }
