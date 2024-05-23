@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Tasks;
 using AutoMapper;
 using Core.Tasks;
-using WebAPI.DTOs.Tasks;
+using Application.DTOs.Tasks;
 
 namespace Application.Services.Tasks
 {
@@ -21,10 +21,9 @@ namespace Application.Services.Tasks
             return await _taskRepository.GetTaskByIdAsync(id);
         }
 
-        public async Task AddTaskAsync(TaskDto task)
+        public async Task AddTaskAsync(TaskBody task)
         {
-            var taskDto = _mapper.Map<TaskBody>(task);
-            await _taskRepository.AddTaskAsync(taskDto);
+            await _taskRepository.AddTaskAsync(task);
         }
 
         public async Task AddSubTaskAsync(TaskSubBody subTask)

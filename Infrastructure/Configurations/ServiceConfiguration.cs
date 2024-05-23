@@ -8,7 +8,6 @@ using Infrastructure.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Crypto;
 using System.Data;
 
 namespace Infrastructure.Configurations
@@ -37,14 +36,7 @@ namespace Infrastructure.Configurations
 
         public static IServiceCollection AddAutoMapper(this IServiceCollection services)
         {
-            var mapperConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new Application.Mappings.MappingProfile());
-            });
-
-            IMapper mapper = mapperConfig.CreateMapper();
-            services.AddSingleton(mapper);
-
+            services.AddAutoMapper(typeof(Application.Mappings.MappingProfile).Assembly);
             return services;
         }
     }

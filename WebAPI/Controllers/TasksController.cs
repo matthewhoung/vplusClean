@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using WebAPI.DTOs.Tasks;
+using Application.DTOs.Tasks;
+using AutoMapper;
 
 namespace WebAPI.Controllers
 {
@@ -13,10 +14,13 @@ namespace WebAPI.Controllers
     {
         private readonly ITaskService _taskService;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public TasksController(ITaskService taskService)
+        public TasksController(ITaskService taskService, IMapper mapper, ILogger logger)
         {
             _taskService = taskService;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet("{id}")]
@@ -30,10 +34,18 @@ namespace WebAPI.Controllers
         [HttpPost("add/task")]
         public async Task<IActionResult> AddTask([FromBody] TaskDto task)
         {
-            if (task == null) return BadRequest();
+            try
+            {
+                var addTask = _mapper.Map<TaskBody>(task);
+                await _taskService.AddTaskAsync(addTask);
 
-            var addTask = _mapper.Map<TaskBody>(task);
-            return CreatedAtAction(nameof(GetTaskById), new { id = task.Id }, task);
+                return Ok(addTask);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
         }
 
         [HttpPost("add/{id}/subtask")]

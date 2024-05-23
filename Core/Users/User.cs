@@ -1,4 +1,4 @@
-﻿namespace Core.Entities
+﻿namespace Core.Users
 {
     public class User
     {
@@ -9,4 +9,3 @@
         public string PasswordHash { get; set; }
     }
 }
-

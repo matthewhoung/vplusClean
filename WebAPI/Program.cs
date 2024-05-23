@@ -1,5 +1,6 @@
 using Infrastructure.Configurations;
 using Newtonsoft.Json;
+using AutoMapper;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,9 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddCustomLogging(builder.Configuration);
 builder.Services.AddRepositories(builder.Configuration);
+builder.Services.AddAutoMapper();
 builder.Services.AddDomainServices();
+
 
 //clear the default logging providers and use Serilog
 builder.Logging.ClearProviders();

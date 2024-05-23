@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.Security;
-using Core.Entities;
+using Core.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

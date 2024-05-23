@@ -1,10 +1,10 @@
-﻿namespace WebAPI.DTOs
+﻿namespace Application.DTOs.Users
 {
     public class RegisterUserModel
     {
         public string Username { get; set; }
         public string Email { get; set; }
-        public string PhoneNumber { get; set; }
+        public string Phone { get; set; }
         public string Password { get; set; }
     }
 }

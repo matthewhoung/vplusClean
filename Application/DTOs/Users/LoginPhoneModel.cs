@@ -1,8 +1,8 @@
-﻿namespace WebAPI.DTOs
+﻿namespace Application.DTOs.Users
 {
     public class LoginPhoneModel
     {
-        public string PhoneNumber { get; set; }
+        public string Phone { get; set; }
         public string Password { get; set; }
     }
 }

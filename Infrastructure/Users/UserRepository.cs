@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.Users;
-using Core.Entities;
+using Core.Users;
 using Dapper;
 using System.Data;
 
@@ -23,8 +23,9 @@ namespace Infrastructure.Repositories
                 {
                     var sqlcommand = @"
                         INSERT INTO users (user_name, email, phone, password_hash)
-                        VALUES (@Username, @Email, @Phone, @PasswordHash)";
-                     var userId = _dbConnection.ExecuteScalar<int>(sqlcommand, user, transaction);
+                        VALUES (@Username, @Email, @Phone, @PasswordHash);
+                        SELECT LAST_INSERT_ID();";
+                    var userId = _dbConnection.ExecuteScalar<int>(sqlcommand, user, transaction);
                     user.Id = userId;
 
                     transaction.Commit();

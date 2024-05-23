@@ -1,4 +1,4 @@
-﻿namespace WebAPI.DTOs.Tasks
+﻿namespace Application.DTOs.Tasks
 {
     public class TaskDto
     {

@@ -1,6 +1,8 @@
 ﻿using Core.Tasks;
 using AutoMapper;
-using WebAPI.DTOs.Tasks;
+using Application.DTOs.Tasks;
+using Application.DTOs.Users;
+using Core.Users;
 
 namespace Application.Mappings
 {
@@ -9,16 +11,7 @@ namespace Application.Mappings
         public MappingProfile()
         {
             CreateMap<TaskDto, TaskBody>();
-            /*
-            CreateMap<SubTaskDto, TaskSubBody>();
-            CreateMap<CollaboratorDto, Collaborator>();
-            CreateMap<WorkDayDto, WorkDay>();
-            // Reverse mappings if needed
-            CreateMap<TaskBody, TaskDto>();
-            CreateMap<TaskSubBody, SubTaskDto>();
-            CreateMap<Collaborator, CollaboratorDto>();
-            CreateMap<WorkDay, WorkDayDto>();
-            */
+            CreateMap<RegisterUserModel, User>();
         }
     }
 }

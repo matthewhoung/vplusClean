@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Core.Users;
 
 namespace Application.Interfaces.Users
 {

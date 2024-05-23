@@ -1,4 +1,4 @@
-﻿namespace WebAPI.DTOs
+﻿namespace Application.DTOs.Users
 {
     public class LoginEmailModel
     {
