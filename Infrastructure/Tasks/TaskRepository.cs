@@ -143,7 +143,7 @@ namespace Infrastructure.Tasks
             {
                 var command = @"
                     INSERT INTO tasks (user_id, title, description, priority, status, progress, start_date, end_date)
-                    VALUES(@UserId, @Title, @Description, @Priority, @status, @Progress, @StartDate, @EndDate)";
+                    VALUES(@UserId, @Title, @Description, @Priority, @Status, @Progress, @StartDate, @EndDate)";
                 await _dbConnection.ExecuteAsync(command, task, transaction);
                 transaction.Commit();
             }
@@ -165,7 +165,7 @@ namespace Infrastructure.Tasks
             {
                 var command = @"
                     INSERT INTO tasks_sub (task_id, title, description, priority, status, progress, start_date, end_date)
-                    VALUES(@TaskId, @Title, @Description, @Priority, @status, @Progress, @StartDate, @EndDate)";
+                    VALUES(@TaskId, @Title, @Description, @Priority, @Status, @Progress, @StartDate, @EndDate)";
                 await _dbConnection.ExecuteAsync(command, subTask);
                 transaction.Commit();
             }
@@ -208,7 +208,7 @@ namespace Infrastructure.Tasks
             try
             {
                 var command = @"
-                    INSERT INTO task_workday (task_id, sub_task_id, work_date, is_completed)
+                    INSERT INTO tasks_workday (task_id, sub_task_id, work_date, is_completed)
                     VALUES(@TaskId, @SubTaskId, @WorkDate, @IsCompleted)";
                 await _dbConnection.ExecuteAsync(command, workDay);
                 transaction.Commit();

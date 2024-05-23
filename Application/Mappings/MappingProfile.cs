@@ -10,8 +10,9 @@ namespace Application.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<TaskDto, TaskBody>();
             CreateMap<RegisterUserModel, User>();
+            CreateMap<TaskDto, TaskBody>();
+            CreateMap<SubTaskDto, TaskSubBody>();
         }
     }
 }

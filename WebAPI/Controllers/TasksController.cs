@@ -4,19 +4,19 @@ using Application.Interfaces.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Application.DTOs.Tasks;
 using AutoMapper;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/tasks")]
     public class TasksController : ControllerBase
     {
         private readonly ITaskService _taskService;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<TasksController> _logger;
 
-        public TasksController(ITaskService taskService, IMapper mapper, ILogger logger)
+        public TasksController(ITaskService taskService, IMapper mapper, ILogger<TasksController> logger)
         {
             _taskService = taskService;
             _mapper = mapper;
@@ -36,46 +36,59 @@ namespace WebAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Adding task: {@Task}", task);
+
                 var addTask = _mapper.Map<TaskBody>(task);
+                _logger.LogInformation("Mapped TaskBody: {@TaskBody}", addTask);
+
                 await _taskService.AddTaskAsync(addTask);
 
                 return Ok(addTask);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
-                return BadRequest();
+                _logger.LogError(ex, "Error adding task");
+                return BadRequest(new { message = "An error occurred while adding the task" });
             }
         }
 
-        [HttpPost("add/{id}/subtask")]
-        public async Task<IActionResult> AddSubTask(int id, [FromBody] TaskSubBody subTask)
+        [HttpPost("add/subtask")]
+        public async Task<IActionResult> AddSubTask([FromBody] SubTaskDto subTask)
         {
-            if (subTask == null) return BadRequest();
+            try
+            {
+                _logger.LogInformation("Adding sub task: {@SubTask}", subTask);
 
-            subTask.TaskId = id;
-            await _taskService.AddSubTaskAsync(subTask);
-            return CreatedAtAction(nameof(GetTaskById), new { id = subTask.SubTaskId }, subTask);
+                var addSubTask = _mapper.Map<TaskSubBody>(subTask);
+                _logger.LogInformation("Mapped SubTaskBody: {@TaskSubBody}", addSubTask);
+
+                await _taskService.AddSubTaskAsync(addSubTask);
+
+                return Ok(addSubTask);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding task");
+                return BadRequest(new { message = "An error occurred while adding the task" });
+            }
         }
 
-        [HttpPost("add/{id}/collaborator")]
-        public async Task<IActionResult> AddCollaborator(int id, [FromBody] Collaborator collaborator)
+        [HttpPost("add/collaborator")]
+        public async Task<IActionResult> AddCollaborator([FromBody] Collaborator collaborator)
         {
             if (collaborator == null) return BadRequest();
 
-            collaborator.TaskId = id;
             await _taskService.AddCollaboratorAsync(collaborator);
-            return CreatedAtAction(nameof(GetTaskById), new { id = collaborator.CollabId }, collaborator);
+            return Ok(collaborator);
         }
 
-        [HttpPost("add/{id}/workday")]
-        public async Task<IActionResult> AddWorkDay(int id, [FromBody] WorkDay workDay)
+        [HttpPost("add/workday")]
+        public async Task<IActionResult> AddWorkDay([FromBody] WorkDay workDay)
         {
             if (workDay == null) return BadRequest();
 
-            workDay.TaskId = id;
             await _taskService.AddWorkDayAsync(workDay);
-            return CreatedAtAction(nameof(GetTaskById), new { id = workDay.WorkDayId }, workDay);
+            return Ok(workDay);
         }
     }
 }
