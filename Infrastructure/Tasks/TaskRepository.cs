@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Tasks;
+﻿using Application.DTOs.Tasks;
+using Application.Interfaces.Tasks;
 using Core.Tasks;
 using Dapper;
 using System.Data;
@@ -201,7 +202,7 @@ namespace Infrastructure.Tasks
                 _dbConnection.Close();
             }
         }
-        public async Task AddWorkDayAsync(WorkDay workDay)
+        public async Task<int> AddWorkDayAsync(WorkDay workDay)
         {
             _dbConnection.Open();
             using var transaction = _dbConnection.BeginTransaction();
@@ -209,9 +210,12 @@ namespace Infrastructure.Tasks
             {
                 var command = @"
                     INSERT INTO tasks_workday (task_id, sub_task_id, work_date, is_completed)
-                    VALUES(@TaskId, @SubTaskId, @WorkDate, @IsCompleted)";
-                await _dbConnection.ExecuteAsync(command, workDay);
+                    VALUES(@TaskId, @SubTaskId, @WorkDate, @IsCompleted);
+                    SELECT LAST_INSERT_ID();";
+
+                var workDayId = await _dbConnection.ExecuteScalarAsync<int>(command, workDay, transaction);
                 transaction.Commit();
+                return workDayId;
             }
             catch (Exception)
             {
@@ -237,6 +241,7 @@ namespace Infrastructure.Tasks
                     UPDATE tasks_workday
                     SET is_completed = 1
                     WHERE workday_id = @WorkDayId";
+
                 await _dbConnection.ExecuteAsync(command, new { WorkDayId = workDayId });
                 transaction.Commit();
             }

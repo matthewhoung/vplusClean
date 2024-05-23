@@ -1,10 +1,8 @@
 ﻿using Core.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Application.DTOs.Tasks;
 using AutoMapper;
-using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -83,12 +81,31 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add/workday")]
-        public async Task<IActionResult> AddWorkDay([FromBody] WorkDay workDay)
+        public async Task<int> AddWorkDayAsync(WorkDay workDay)
         {
-            if (workDay == null) return BadRequest();
+            var workDayId = await _taskService.AddWorkDayAsync(workDay);
+            return workDayId;
+        }
 
-            await _taskService.AddWorkDayAsync(workDay);
-            return Ok(workDay);
+        [HttpPut("update/workday/{workDayId}")]
+        public async Task<IActionResult> UpdateWorkDayCompletion(int workDayId)
+        {
+            try
+            {
+                
+                _logger.LogInformation("Updating workday completion for WorkDayId: {WorkDayId}", workDayId);
+
+                await _taskService.UpdateWorkDayCompletionAsync(workDayId);
+
+                _logger.LogInformation("Successfully updated workday completion for WorkDayId: {WorkDayId}", workDayId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating workday completion for WorkDayId: {WorkDayId}", workDayId);
+                return StatusCode(500, new { message = "An error occurred while updating the workday completion" });
+            }
         }
     }
 }

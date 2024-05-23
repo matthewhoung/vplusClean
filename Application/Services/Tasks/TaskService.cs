@@ -36,9 +36,10 @@ namespace Application.Services.Tasks
             await _taskRepository.AddCollaboratorAsync(collaborator);
         }
 
-        public async Task AddWorkDayAsync(WorkDay workDay)
+        public async Task<int> AddWorkDayAsync(WorkDay workDay)
         {
             await _taskRepository.AddWorkDayAsync(workDay);
+            return workDay.WorkDayId;
         }
 
         public async Task UpdateWorkDayCompletionAsync(int workDayId)

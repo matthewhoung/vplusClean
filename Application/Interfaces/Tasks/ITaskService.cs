@@ -8,7 +8,7 @@ namespace Application.Interfaces.Tasks
         Task AddTaskAsync(TaskBody task);
         Task AddSubTaskAsync(TaskSubBody subTask);
         Task AddCollaboratorAsync(Collaborator collaborator);
-        Task AddWorkDayAsync(WorkDay workDay);
+        Task<int> AddWorkDayAsync(WorkDay workDay);
         Task UpdateWorkDayCompletionAsync(int workDayId);
     }
 }
