@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using WebAPI.DTOs.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -11,6 +12,7 @@ namespace WebAPI.Controllers
     public class TasksController : ControllerBase
     {
         private readonly ITaskService _taskService;
+        private readonly IMapper _mapper;
 
         public TasksController(ITaskService taskService)
         {
@@ -26,11 +28,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add/task")]
-        public async Task<IActionResult> AddTask([FromBody] TaskBody task)
+        public async Task<IActionResult> AddTask([FromBody] TaskDto task)
         {
             if (task == null) return BadRequest();
 
-            await _taskService.AddTaskAsync(task);
+            var addTask = _mapper.Map<TaskBody>(task);
             return CreatedAtAction(nameof(GetTaskById), new { id = task.Id }, task);
         }
 
