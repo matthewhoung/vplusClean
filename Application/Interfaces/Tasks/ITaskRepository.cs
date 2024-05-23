@@ -2,14 +2,33 @@
 
 namespace Application.Interfaces.Tasks
 {
-    public interface ITaskRepository : ITaskGeneric<TaskBody>
+    public interface ITaskRepository
     {
-        //ToDo: add progress, priority, start date, end date
-        Task AddSubTaskAsync(TaskSubBody subTask);
-        Task AddCollaboratorAsync(Collaborator collaborator);
-        Task AddWorkDayAsync(WorkDay workDay);
+        /*
+        Retrieve Section
+        - GetTaskByIdAsync
+        - GetSubTaskAsync
+        - GetCollaboratorAsync
+        - GetWorkDayAsync
+        */
         Task<IEnumerable<TaskSubBody>> GetSubTaskAsync(int taskId);
         Task<IEnumerable<Collaborator>> GetCollaboratorAsync(int taskId);
         Task<IEnumerable<WorkDay>> GetWorkDayAsync(int taskId);
+        /*
+         Create Section
+         - AddTaskAsync
+         - AddSubTaskAsync 
+         - AddCollaboratorAsync
+         - AddWorkDayAsync
+         */
+        Task AddTaskAsync(TaskBody task);
+        Task AddSubTaskAsync(TaskSubBody subTask);
+        Task AddCollaboratorAsync(Collaborator collaborator);
+        Task AddWorkDayAsync(WorkDay workDay);
+        /*
+         Update Section
+         - UpdateWorkDayCompletionAsync
+         */
+        Task UpdateWorkDayCompletionAsync(int workDayId);
     }
 }

@@ -63,10 +63,10 @@ namespace WebAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("delete/{id}/{task}")]
-        public async Task<IActionResult> DeleteTask(int id)
+        [HttpDelete("delete/{task}")]
+        public async Task<IActionResult> DeleteTask(int taskId)
         {
-            await _taskService.DeleteTaskAsync(id);
+            await _taskService.DeleteTaskAsync(taskId);
             return NoContent();
         }
     }

@@ -26,9 +26,9 @@ namespace Application.Services.Tasks
             await _taskRepository.UpdateAsync(task);
         }
 
-        public async Task DeleteTaskAsync(int id)
+        public async Task DeleteTaskAsync(int taskId)
         {
-            await _taskRepository.DeleteAsync(id);
+            await _taskRepository.DeleteAsync(taskId);
         }
 
         public async Task AddSubTaskAsync(TaskSubBody subTask)
@@ -44,6 +44,11 @@ namespace Application.Services.Tasks
         public async Task AddWorkDayAsync(WorkDay workDay)
         {
             await _taskRepository.AddWorkDayAsync(workDay);
+        }
+
+        public async Task UpdateWorkDayCompletionAsync(int workDayId)
+        {
+            await _taskRepository.UpdateWorkDayCompletionAsync(workDayId);
         }
     }
 }

@@ -3,9 +3,9 @@
     public interface ITaskGeneric<T>
         where T : class
     {
-        Task<T> GetTaskByIdAsync(int id);
+        Task<T> GetTaskByIdAsync(int userId);
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
-        Task DeleteAsync(int id, int taskId);
+        Task DeleteAsync(int taskId);
     }
 }

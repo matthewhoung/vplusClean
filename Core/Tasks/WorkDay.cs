@@ -12,5 +12,6 @@ namespace Core.Tasks
         public int TaskId { get; set; }
         public int? SubTaskId { get; set; }
         public DateTime WorkDate { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }
