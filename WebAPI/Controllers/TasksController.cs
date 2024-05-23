@@ -25,49 +25,43 @@ namespace WebAPI.Controllers
             return Ok(task);
         }
 
-        [HttpPost("add/{id}/task")]
+        [HttpPost("add/task")]
         public async Task<IActionResult> AddTask([FromBody] TaskBody task)
         {
+            if (task == null) return BadRequest();
+
             await _taskService.AddTaskAsync(task);
             return CreatedAtAction(nameof(GetTaskById), new { id = task.Id }, task);
         }
 
-        [HttpPost("add/{id}/subtasks")]
+        [HttpPost("add/{id}/subtask")]
         public async Task<IActionResult> AddSubTask(int id, [FromBody] TaskSubBody subTask)
         {
+            if (subTask == null) return BadRequest();
+
             subTask.TaskId = id;
             await _taskService.AddSubTaskAsync(subTask);
             return CreatedAtAction(nameof(GetTaskById), new { id = subTask.SubTaskId }, subTask);
         }
-        [HttpPost("add/{id}/collaborators")]
+
+        [HttpPost("add/{id}/collaborator")]
         public async Task<IActionResult> AddCollaborator(int id, [FromBody] Collaborator collaborator)
         {
+            if (collaborator == null) return BadRequest();
+
             collaborator.TaskId = id;
             await _taskService.AddCollaboratorAsync(collaborator);
             return CreatedAtAction(nameof(GetTaskById), new { id = collaborator.CollabId }, collaborator);
         }
 
-        [HttpPost("add/{id}/workdays")]
+        [HttpPost("add/{id}/workday")]
         public async Task<IActionResult> AddWorkDay(int id, [FromBody] WorkDay workDay)
         {
+            if (workDay == null) return BadRequest();
+
             workDay.TaskId = id;
             await _taskService.AddWorkDayAsync(workDay);
             return CreatedAtAction(nameof(GetTaskById), new { id = workDay.WorkDayId }, workDay);
-        }
-
-        [HttpPut("update/{id}/{task}")]
-        public async Task<IActionResult> UpdateTask(int id, [FromBody] TaskBody task)
-        {
-            if (id != task.Id) return BadRequest();
-            await _taskService.UpdateTaskAsync(task);
-            return NoContent();
-        }
-
-        [HttpDelete("delete/{task}")]
-        public async Task<IActionResult> DeleteTask(int taskId)
-        {
-            await _taskService.DeleteTaskAsync(taskId);
-            return NoContent();
         }
     }
 }

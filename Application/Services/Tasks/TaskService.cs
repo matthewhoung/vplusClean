@@ -11,6 +11,7 @@ namespace Application.Services.Tasks
         {
             _taskRepository = taskRepository;
         }
+
         public async Task<TaskBody> GetTaskByIdAsync(int id)
         {
             return await _taskRepository.GetTaskByIdAsync(id);
@@ -18,17 +19,7 @@ namespace Application.Services.Tasks
 
         public async Task AddTaskAsync(TaskBody task)
         {
-            await _taskRepository.AddAsync(task);
-        }
-
-        public async Task UpdateTaskAsync(TaskBody task)
-        {
-            await _taskRepository.UpdateAsync(task);
-        }
-
-        public async Task DeleteTaskAsync(int taskId)
-        {
-            await _taskRepository.DeleteAsync(taskId);
+            await _taskRepository.AddTaskAsync(task);
         }
 
         public async Task AddSubTaskAsync(TaskSubBody subTask)

@@ -227,7 +227,6 @@ namespace Infrastructure.Tasks
          Update Section
          - UpdateWorkDayCompletionAsync
          */
-
         public async Task UpdateWorkDayCompletionAsync(int workDayId)
         {
             _dbConnection.Open();

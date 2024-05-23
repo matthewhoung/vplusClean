@@ -11,6 +11,7 @@ namespace Application.Interfaces.Tasks
         - GetCollaboratorAsync
         - GetWorkDayAsync
         */
+        Task<TaskBody> GetTaskByIdAsync(int userId)
         Task<IEnumerable<TaskSubBody>> GetSubTaskAsync(int taskId);
         Task<IEnumerable<Collaborator>> GetCollaboratorAsync(int taskId);
         Task<IEnumerable<WorkDay>> GetWorkDayAsync(int taskId);
