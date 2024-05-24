@@ -1,7 +1,6 @@
 ﻿using Application.Interfaces.Tasks;
 using AutoMapper;
 using Core.Tasks;
-using Application.DTOs.Tasks;
 
 namespace Application.Services.Tasks
 {
@@ -19,6 +18,18 @@ namespace Application.Services.Tasks
         public async Task<TaskBody> GetTaskByIdAsync(int id)
         {
             return await _taskRepository.GetTaskByIdAsync(id);
+        }
+        public async Task<IEnumerable<TaskSubBody>> GetSubTaskAsync(int taskId)
+        {
+            return await _taskRepository.GetSubTaskAsync(taskId);
+        }
+        public async Task<IEnumerable<Collaborator>> GetCollaboratorsAsync(int taskId)
+        {
+            return await _taskRepository.GetCollaboratorAsync(taskId);
+        }
+        public async Task<IEnumerable<WorkDay>> GetnotCompletedWorkDaysAsync(int taskId)
+        {
+            return await _taskRepository.GetWorkDayAsync(taskId);
         }
 
         public async Task AddTaskAsync(TaskBody task)

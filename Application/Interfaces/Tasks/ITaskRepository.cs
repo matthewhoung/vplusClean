@@ -4,6 +4,15 @@ namespace Application.Interfaces.Tasks
 {
     public interface ITaskRepository
     {
+        //TODO:
+        //create index inside the database for the status column
+        //create index inside the database for the priority column
+        //create index inside the database for the isCompleted column
+        //Fix all the get methods
+        //index all the get methods
+        //Progress service methods
+        //isArchived service methods
+        //index service methods
         /*
         Retrieve Section
         - GetTaskByIdAsync

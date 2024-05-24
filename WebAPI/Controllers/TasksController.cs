@@ -29,6 +29,30 @@ namespace WebAPI.Controllers
             return Ok(task);
         }
 
+        [HttpGet("subtasks/{taskId}")]
+        public async Task<IActionResult> GetSubTask(int taskId)
+        {
+            var subTasks = await _taskService.GetSubTaskAsync(taskId);
+            if (subTasks == null) return NotFound();
+            return Ok(subTasks);
+        }
+
+        [HttpGet("collaborators/{taskId}")]
+        public async Task<IActionResult> GetCollaborators(int taskId)
+        {
+            var collaborators = await _taskService.GetCollaboratorsAsync(taskId);
+            if (collaborators == null) return NotFound();
+            return Ok(collaborators);
+        }
+
+        [HttpGet("workdays/notcomplete/{taskId}")]
+        public async Task<IActionResult> GetNotCompletedWorkDays(int taskId)
+        {
+            var workDays = await _taskService.GetnotCompletedWorkDaysAsync(taskId);
+            if (workDays == null) return NotFound();
+            return Ok(workDays);
+        }
+
         [HttpPost("add/task")]
         public async Task<IActionResult> AddTask([FromBody] TaskDto task)
         {
@@ -83,8 +107,21 @@ namespace WebAPI.Controllers
         [HttpPost("add/workday")]
         public async Task<int> AddWorkDayAsync(WorkDay workDay)
         {
-            var workDayId = await _taskService.AddWorkDayAsync(workDay);
-            return workDayId;
+            try
+            {
+                _logger.LogInformation("Adding workday: {@WorkDay}", workDay);
+
+                var workDayId = await _taskService.AddWorkDayAsync(workDay);
+
+                _logger.LogInformation("Successfully added workday with WorkDayId: {WorkDayId}", workDayId);
+                return workDayId;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error adding workday");
+                return -1;
+            }
+            
         }
 
         [HttpPut("update/workday/{workDayId}")]

@@ -214,6 +214,7 @@ namespace Infrastructure.Tasks
                     SELECT LAST_INSERT_ID();";
 
                 var workDayId = await _dbConnection.ExecuteScalarAsync<int>(command, workDay, transaction);
+                workDay.WorkDayId = workDayId;
                 transaction.Commit();
                 return workDayId;
             }
